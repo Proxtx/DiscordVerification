@@ -1,0 +1,23 @@
+{
+  "name": "discordverification",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "This is a custom Discord Verification bot. You have to host this bot on your own machine.\r Configure the bot in the config.json",
+  "main": "main.js",
+  "scripts": {
+    "test": "nodemon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Proxtx/DiscordVerification.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Proxtx/DiscordVerification/issues"
+  },
+  "homepage": "https://github.com/Proxtx/DiscordVerification#readme",
+  "dependencies": {
+    "canvas": "^2.8.0"
+  }
+}
