@@ -105,8 +105,8 @@ const drawLine = (ctx, width, height, color = "black") => {
   ctx.stroke();
 };
 
-export const generate = () => {
-  saveImg(drawString(genString(random(5, 15))), "save.png");
+export const generate = (saveLocation) => {
+  saveImg(drawString(genString(random(5, 15))), saveLocation);
 };
 
 const saveImg = (canvas, filePath) => {
@@ -118,6 +118,6 @@ const saveImg = (canvas, filePath) => {
   });
 
   stream.on("end", function () {
-    console.log("saved png");
+    console.log("Generated Captcha");
   });
 };

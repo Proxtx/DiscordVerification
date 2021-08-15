@@ -1,3 +1,3 @@
 import { generate } from "./captcha.js";
 
-generate();
+generate("save.png");
