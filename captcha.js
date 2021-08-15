@@ -1,11 +1,12 @@
 import Canvas from "canvas";
 import fs from "fs";
+import { config } from "./lib.js";
 
-const fontSize = 30;
-const font = "Impact";
-const padding = 30;
-const letterSpacing = 2;
-const bgColor = "#3498db";
+const fontSize = config.captcha.fontSize;
+const font = config.captcha.font;
+const padding = config.captcha.padding;
+const letterSpacing = config.captcha.letterSpacing;
+const bgColor = config.captcha.backgroundColor;
 
 const randomArrayEntry = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -18,9 +19,7 @@ const random = (min, max) => {
 const genString = (length) => {
   let string = "";
   for (let i = 0; i < length; i++) {
-    string += randomArrayEntry(
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("")
-    );
+    string += randomArrayEntry(config.captcha.genString.split(""));
   }
   return string;
 };
@@ -46,8 +45,8 @@ const drawString = (string) => {
   for (let i in string) {
     const textOffsetX =
       ctx.measureText(string.substring(0, i)).width * letterSpacing +
-      random(-3, 3);
-    const textOffsetY = random(-3, 3);
+      (config.captcha.movement ? random(-3, 3) : 0);
+    const textOffsetY = config.captcha.movement ? random(-3, 3) : 0;
     const rot = Math.random() - 0.5;
     drawLetter(
       ctx,
@@ -69,13 +68,15 @@ const drawString = (string) => {
 
   const lines = random(3, 10);
 
-  for (let i = 0; i < lines; i++)
-    drawLine(
-      ctx,
-      width,
-      height,
-      randomArrayEntry(["red", "green", "black", "yellow"])
-    );
+  if (config.captcha.lines) {
+    for (let i = 0; i < lines; i++)
+      drawLine(
+        ctx,
+        width,
+        height,
+        randomArrayEntry(["red", "green", "black", "yellow"])
+      );
+  }
 
   return canvas;
 };
@@ -90,7 +91,9 @@ const drawLetter = (
 ) => {
   ctx.save();
   ctx.translate(offsetX, fontSize + offsetY);
-  ctx.rotate(rotation);
+  if (config.captcha.rotation) {
+    ctx.rotate(rotation);
+  }
   ctx.fillStyle = fillStyle;
   ctx.fillText(letter, 0, 0);
   ctx.restore();
@@ -106,7 +109,11 @@ const drawLine = (ctx, width, height, color = "black") => {
 };
 
 export const generate = (saveLocation) => {
-  saveImg(drawString(genString(random(5, 15))), saveLocation);
+  const string = genString(
+    random(config.captcha.minLetters, config.captcha.maxLetters)
+  );
+  saveImg(drawString(string), saveLocation);
+  return string;
 };
 
 const saveImg = (canvas, filePath) => {

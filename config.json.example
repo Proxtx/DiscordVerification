@@ -1,0 +1,19 @@
+{
+  "token": "--TOKEN--",
+  "role": "1234567890",
+  "tries": 3,
+  "caseSensitive": false,
+  "captcha": {
+    "minLetters": 5,
+    "maxLetters": 7,
+    "backgroundColor": "#3498db",
+    "fontSize": 30,
+    "padding": 30,
+    "font": "Impact",
+    "letterSpacing": 2,
+    "genString": "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+    "rotation": true,
+    "movement": true,
+    "lines": true
+  }
+}

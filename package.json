@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Proxtx/DiscordVerification#readme",
   "dependencies": {
-    "canvas": "^2.8.0"
+    "canvas": "^2.8.0",
+    "discord.js": "^12.1.0"
   }
 }
