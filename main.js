@@ -51,7 +51,11 @@ client.on("message", (msg) => {
   checkVerify(msg);
 });
 
-client.on("guildMemberAdd", (member) => sendVerify(member));
+client.on("guildMemberAdd", (member) => {
+  if (config.onJoin) {
+    sendVerify(member);
+  }
+});
 
 const sendVerify = (member) => {
   verifyCodes[member.id] = {
