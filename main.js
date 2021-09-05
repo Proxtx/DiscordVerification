@@ -48,7 +48,11 @@ client.on("message", (msg) => {
   ) {
     sendVerify(msg.member);
   }
-  checkVerify(msg);
+  try {
+    checkVerify(msg);
+  } catch (e) {
+    console.log("Check Error: Probably DMs disabled!");
+  }
 });
 
 client.on("guildMemberAdd", (member) => {
@@ -64,12 +68,16 @@ const sendVerify = (member) => {
     tries: 0,
   };
   console.log("Code: " + verifyCodes[member.id].code);
-  member.send(infoEmbed);
-  member.send({ files: ["./save.png"] });
+  try {
+    member.send(infoEmbed);
+    member.send({ files: ["./save.png"] });
+  } catch (e) {
+    console.log("Error sending info: Probably DMs disabled!");
+  }
 };
 
 const checkVerify = (msg) => {
-  if (msg.channel.type === "dm") {
+  if (msg.channel.type === "dm" && verifyCodes[msg.author.id]) {
     if (
       (!config.caseSensitive &&
         msg.content.toLocaleUpperCase() == verifyCodes[msg.author.id].code) ||
